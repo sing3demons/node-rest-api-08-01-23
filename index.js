@@ -22,4 +22,25 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoute)
 app.use('/api/users', usersRoute)
+
+// Error handling Middleware function for logging the error message
+const errorLogger = (error, req, res, next) => {
+  console.log(`error ${error.message}`)
+  next(error)
+}
+const errorResponder = (error, req, res, next) => {
+  res.header('Content-Type', 'application/json')
+  const status = error.status || 400
+  res.status(status).json({ error: error.message })
+}
+
+const invalidPathHandler = (req, res, next) => {
+  res.status(404)
+  res.send('invalid path')
+}
+
+app.use(errorLogger)
+app.use(errorResponder)
+app.use(invalidPathHandler)
+
 app.listen(port, () => console.log(`Server is running on port ${port}`))

@@ -1,0 +1,31 @@
+@uri=http://127.0.0.1:8080/api
+
+
+## register a new user
+POST {{uri}}/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "sing3demons",
+  "password": "123456",
+  "email": "sing@dev.com"
+}
+
+###
+# @name authen
+POST {{uri}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "sing@dev.com",
+  "password": "123456"
+}
+###
+
+@token = {{authen.response.body.$.resultData.accessToken}}
+@refreshToken = {{authen.response.body.$.resultData.refreshToken}}
+
+###
+GET {{uri}}/profile
+Content-Type: application/json
+Authorization: Bearer {{token}}
