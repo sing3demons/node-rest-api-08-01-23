@@ -22,8 +22,8 @@ Content-Type: application/json
 }
 ###
 
-@token = {{authen.response.body.$.resultData.accessToken}}
-@refreshToken = {{authen.response.body.$.resultData.refreshToken}}
+@token = {{authen.response.body.$.accessToken}}
+@refreshToken = {{authen.response.body.$.refreshToken}}
 
 ###
 GET {{uri}}/profile
